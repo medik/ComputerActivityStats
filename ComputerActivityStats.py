@@ -57,6 +57,27 @@ def SaveToCSV(csvfile, tpl):
         for i in range(len(pos)):
             out.write(str(timepos[i]) + ',' + str(pos[i][0]) + ',' +
                     str(pos[i][1]) + '\n')
+def PlotHeatmap(act):
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    pos, timepos, starttime, endtime = act
+
+    x_values = []
+    y_values = []
+
+    for x, y in pos:
+        x_values.append(x)
+        y_values.append(y)
+
+
+    heatmap, xedges, yedges = np.histogram2d(x_values, y_values, bins=50)
+    extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
+
+    plt.clf()
+    plt.imshow(heatmap, extent=extent)
+    plt.show()
+    
 
 def main():
     q = MeasureActivity()
